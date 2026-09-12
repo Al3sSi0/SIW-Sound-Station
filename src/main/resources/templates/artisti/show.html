@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Artista</title>
+</head>
+
+<body>
+	<h1 th:text="${artista.nome}">Eminem</h1>
+	<div>
+		DATA DI NASCITA: <span th:text="${artista.dataNascita}">2018</span>
+		<br>
+		NAZIONALITA': <span th:text="${artista.nazionalita}">USA</span>
+		<br>
+		<img th:src="${artista.imgUrl}" width="200">
+		<div>
+			ALBUMS:
+			<div th:if="${artista.albumIncisi != null and !#lists.isEmpty(artista.albumIncisi)}">
+				<ul>
+					<li th:each="album: ${artista.albumIncisi}">
+						<a th:href="@{'/albums/' + ${album.id}}" th:text="${album.nome}">Stan</a>
+					</li>
+				</ul>
+			</div>
+
+			<span th:if="${artista.albumIncisi == null or #lists.isEmpty(artista.albumIncisi)}">NON CI SONO ALBUM</span>
+		</div>
+		<div>
+			SINGOLI:
+			<div th:if="${brani != null and !#lists.isEmpty(brani)}">
+				<ul>
+					<li th:each="brano: ${brani}" th:if="${brano.album==null}">
+						<a th:href="@{'/brani/' + ${brano.id}}" th:text="${brano.nome}">Stan</a>
+					</li>
+				</ul>
+			</div>
+
+			<span th:if="${brani == null or #lists.isEmpty(brani) or #lists.isEmpty(brani.?[album == null])}">NON CI SONO SINGOLI</span>
+		</div>
+	</div>
+</body>
+
+</html>

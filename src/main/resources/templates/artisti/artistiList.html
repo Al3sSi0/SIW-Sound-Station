@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Artisti</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inria Serif", serif;
+            background-color: #1a1e1b; /* Sfondo scuro per esaltare i testi chiari */
+            color: #ffffff;
+        }
+
+        .page-container {
+            animation: fadeIn 0.5s ease-in;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4vh 4vw 6vh 4vw;
+            box-sizing: border-box;
+        }
+
+        .header-section {
+            margin-bottom: 5vh;
+            padding-left: 1vw;
+        }
+
+        .title {
+            font-weight: 700;
+            color: #d4efe2;
+            letter-spacing: 3px;
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-weight: 400;
+            color: #d4efe2;
+            opacity: 0.9;
+            margin-top: 1vh;
+            font-size: 1.2rem;
+        }
+
+        .search-container {
+            padding-left: 1vw;
+            margin-bottom: 4vh;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 350px;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: "Inria Serif", serif;
+            border: 2px solid rgba(212, 239, 226, 0.4);
+            border-radius: 16px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .search-input:hover, .search-input:focus {
+            border-color: #d4efe2;
+        }
+
+        .search-input::placeholder {
+            color: rgba(212, 239, 226, 0.5);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4vh 3vw;
+            width: 100%;
+        }
+
+        .artista-card {
+            border-radius: 50px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #4b5851 30%, #84a293 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2vh 0.2vw 3vh 0.2vw;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        .artista-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .artista-img {
+            width: 60%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .artista-name {
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            font-size: 2rem;
+            margin-top: 3vh;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #d4efe2;
+            opacity: 0.8;
+            font-size: 1.5rem;
+            margin-top: 5vh;
+            display: none;
+        }
+
+        @media (max-width: 960px) {
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+            .title { font-size: 3rem; }
+        }
+
+        @media (max-width: 600px) {
+            .grid-container { grid-template-columns: 1fr; }
+            .artista-img { width: 150px; }
+            .artista-name { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        
+        <div class="header-section">
+            <h1 class="title">LISTA ARTISTI</h1>
+            <p class="subtitle">Cerca tra centinaia di artisti di fama mondiale!</p>
+        </div>
+
+        <div th:if="${artisti.empty}" style="color: #d4efe2; text-align: center; margin-top: 10vh; font-size: 2rem;">
+            Nessun artista presente nel database!
+        </div>
+
+        <div th:unless="${artisti.empty}">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Filtra per nome...">
+            </div>
+
+            <div class="grid-container" id="gridContainer">
+                <a th:each="artista : ${artisti}" th:href="'http://localhost:5173/artisti/' + ${artista.id}" class="artista-card">
+                    <img class="artista-img" 
+                         th:src="${artista.imgUrl != null ? artista.imgUrl : 'https://via.placeholder.com/200?text=No+Image'}" 
+                         th:alt="${artista.nome}">
+                    <h2 class="artista-name" th:text="${artista.nome}">Nome Artista</h2>
+                </a>
+            </div>
+            
+            <div class="empty-message" id="noResultsMsg">
+                Nessun artista inizia con la lettera "<span id="queryLabel"></span>".
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (!searchInput) return;
+
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.artista-card');
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const nameElement = card.querySelector('.artista-name');
+                    if (nameElement) {
+                        const name = nameElement.textContent.toLowerCase();
+                        // Replica esatta del comportamento .startsWith() di React
+                        if (name.startsWith(query)) {
+                            card.style.display = 'flex';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+
+                const noResultsMsg = document.getElementById('noResultsMsg');
+                const queryLabel = document.getElementById('queryLabel');
+                
+                if (visibleCount === 0 && cards.length > 0) {
+                    queryLabel.textContent = e.target.value;
+                    noResultsMsg.style.style.display = 'block';
+                } else {
+                    noResultsMsg.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

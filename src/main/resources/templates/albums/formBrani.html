@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Nuovo Album - Aggiungi Brani</title>
+</head>
+<body>
+	<h1>Aggiungi Brani all'Album</h1>
+	
+	<div>
+		Stai inserendo le canzoni per l'album: <strong th:text="${album.nome}">All Eyez on Me</strong><br>
+		Artista: <strong th:text="${album.autore.nome}">2Pac</strong>
+	</div>
+	<br>
+
+	<form method="POST" th:action="@{'/albums/' + ${album.id} + '/addBrani'}">
+		<div>
+			<strong>SELEZIONA I BRANI DA INCLUDERE NELL'ALBUM:</strong>
+			<br><br>
+			
+			<div th:if="${braniDisponibili != null and !#lists.isEmpty(braniDisponibili)}">
+				<div th:each="brano : ${braniDisponibili}">
+					<input type="checkbox" name="braniIds" th:value="${brano.id}" th:id="'brano-' + ${brano.id}" />
+					<label th:for="'brano-' + ${brano.id}" th:text="${brano.nome}">Canzone</label>
+				</div>
+			</div>
+			
+			<span th:if="${braniDisponibili == null or #lists.isEmpty(braniDisponibili)}">
+				Questo artista non ha canzoni singole disponibili da inserire in un album!
+			</span>
+		</div>
+
+		<br>
+		<button type="submit">CONCLUDI E INSERISCI ALBUM</button>
+	</form>
+</body>
+</html>

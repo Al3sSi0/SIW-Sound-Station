@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>PLAYLIST</title>
+</head>
+
+<body>
+	NOME:
+	<h1 th:text="${playlist.nome}">Eminem</h1>
+	DATA CREAZIONE:
+	<h1 th:text="${playlist.dataCreazione}">Eminem</h1>
+	<div>
+		BRANI:
+		<div th:if="${playlist.brani != null and !#lists.isEmpty(playlist.brani)}">
+			<ul>
+				<li th:each="brano: ${playlist.brani}">
+					<a th:href="@{'/brani/' + ${brano.id}}" th:text="${brano.nome}">Stan</a>
+				</li>
+			</ul>
+		</div>
+
+		<span th:if="${playlist.brani == null or #lists.isEmpty(playlist.brani)}">NON CI SONO BRANI</span>
+	</div>
+	<div>
+		<h1><a th:href="@{'/playlists/' + ${playlist.id} + '/addBrani'}">AGGIUNGI BRANI</a></h1>
+	</div>
+</body>
+
+</html>

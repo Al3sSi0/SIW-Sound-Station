@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Inserimento nuovo artista</title>
+</head>
+
+<body>
+	<form method="POST" th:action="@{/artisti}" th:object="${artista}">
+		<div>
+			NOME:
+			<input type="text" th:field="*{nome}" />
+			<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+		</div>
+		<div>
+		    DATA DI NASCITA:
+		    <input type="date" th:field="*{dataNascita}" />
+		    <span th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}"></span>
+		</div>
+		<div>
+			NAZIONALITA:
+			<input type="text" th:field="*{nazionalita}" />
+			<span th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}"></span>
+		</div>
+		<div>
+			IMMAGINE URL':
+			<input type="text" th:field="*{imgUrl}" />
+			<span th:if="${#fields.hasErrors('imgUrl')}" th:errors="*{imgUrl}"></span>
+		</div>
+		<button type="submit">INSERISCI</button>
+		</div>
+	</form>
+</body>
+
+</html>

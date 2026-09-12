@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Albums</title>
+</head>
+
+<body>
+	<h1> LISTA ALBUMS: </h1>
+	<h1>Numero albums:</h1>
+	<span th:text="${albumsNum}">12</span>
+	<div>
+		<ul>
+			<li th:each="album: ${albums}">
+				<a th:href="@{'/albums/' + ${album.id}}" th:text="${album.nome}">Stan</a>
+			</li>
+		</ul>
+	</div>
+</body>
+
+</html>

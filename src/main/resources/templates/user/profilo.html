@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Il Mio Profilo</title>
+    <link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <style>
+        .profile-container { max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; font-family: Arial, sans-serif; }
+        .data-section { margin-bottom: 25px; background-color: #f9f9f9; padding: 15px; border-radius: 6px; }
+        .playlist-item { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .no-playlists { color: #777; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <h1>Il Mio Profilo</h1>
+        
+        <div class="data-section">
+            <h3>Informazioni Account</h3>
+            <p><strong>Username di Login:</strong> <span th:text="${username}">username123</span></p>
+            <p><strong>Nome:</strong> <span th:text="${user.name}">Mario</span></p>
+            <p><strong>Cognome:</strong> <span th:text="${user.surname}">Rossi</span></p>
+            <p><strong>Email di contatto:</strong> <span th:text="${user.email}">mario.rossi@email.com</span></p>
+        </div>
+
+        <div class="playlist-section">
+            <h3>Le Mie Playlist</h3>
+            
+            <div th:if="${playlists.isEmpty()}" class="no-playlists">
+                Non hai ancora creato nessuna playlist musicale.
+            </div>
+            
+            <div th:unless="${playlists.isEmpty()}">
+                <div class="playlist-item" th:each="playlist : ${playlists}">
+                    <div>
+                        <strong th:text="${playlist.nome}">Nome Playlist</strong>
+                        <span style="font-size: 0.85em; color: #666;" 
+                              th:text="' - Creata il: ' + ${#temporals.format(playlist.dataCreazione, 'dd/MM/yyyy')}">
+                              - Creata il: 01/01/2026
+                        </span>
+                    </div>
+                    <div>
+                        <a th:href="@{'/playlists/' + ${playlist.id}}">Visualizza</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <p style="margin-top: 30px;"><a th:href="@{/}">Torna alla Home</a></p>
+    </div>
+
+</body>
+</html>

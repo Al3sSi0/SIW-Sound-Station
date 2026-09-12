@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Inserimento nuovo album</title>
+</head>
+
+<body>
+	<form method="POST" th:action="@{/albums}" th:object="${album}">
+		<div>
+			NOME:
+			<input type="text" th:field="*{nome}" />
+			<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+		</div>
+		<div>
+			ANNO:
+			<input type="text" th:field="*{anno}" />
+			<span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
+		</div>
+		<div>
+			IMMAGINE URL':
+			<input type="text" th:field="*{imgUrl}" />
+			<span th:if="${#fields.hasErrors('imgUrl')}" th:errors="*{imgUrl}"></span>
+		</div>
+		<div> AUTORE:
+			<div>
+				<select th:field="*{autore}">
+					<option value="">--SCEGLI ARTISTA--</option>
+					<option th:each="artista : ${artisti}" th:value="${artista.id}" th:text="${artista.nome}">Eminem
+					</option>
+				</select>
+			</div>
+		</div>
+		<button type="submit">INSERISCI</button>
+		</div>
+	</form>
+</body>
+
+</html>

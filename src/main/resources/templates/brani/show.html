@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Brano</title>
+</head>
+
+<body>
+	<h1 th:text="${brano.nome}">Stan</h1>
+	<div>
+		ANNO: <span th:text="${brano.anno}">2018</span>
+		<br>
+		GENERE: <span th:text="${brano.genere}">Rap</span>
+		<br>
+		DURATA:  <span th:text="${brano.minuti} + ':' + ${#numbers.formatInteger(brano.secondi, 2)}">02:12</span>
+		<img th:src="${brano.imgUrl}" width="200">
+	</div>
+	<div>
+		AUTORE: <a th:href="@{'/artisti/'+ ${brano.autore.id}}" th:text="${brano.autore.nome}">Lele</a>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Inserimento nuova playlist</title>
+</head>
+
+<body>
+	<form method="POST" th:action="@{/playlists}" th:object="${playlist}">
+		<div>
+			NOME:
+			<input type="text" th:field="*{nome}" />
+			<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+		</div>
+		<div>
+			URL IMMAGINE:
+			<input type="text" th:field="*{imgUrl}" />
+			<span th:if="${#fields.hasErrors('imgUrl')}" th:errors="*{imgUrl}"></span>
+		</div>
+
+		<button type="submit">INSERISCI</button>
+		</div>
+	</form>
+</body>
+
+</html>

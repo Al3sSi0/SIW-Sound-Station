@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Nuovo Album - Aggiungi Brani</title>
+</head>
+<body>
+	<h1>Aggiungi Brani all'Album</h1>
+	
+	<div>
+		Stai inserendo le canzoni nella playlist : <strong th:text="${playlist.nome}">Estate</strong><br>
+	</div>
+	<br>
+
+	<form method="POST" th:action="@{'/playlists/' + ${playlist.id} + '/addBrani'}">
+		<div>
+			<strong>SELEZIONA I BRANI DA INCLUDERE NELLA PLAYLIST:</strong>
+			<br><br>
+			
+			<div th:if="${brani != null and !#lists.isEmpty(brani)}">
+				<div th:each="brano : ${brani}">
+					<input type="checkbox" name="braniIds" th:value="${brano.id}" th:id="'brano-' + ${brano.id}" />
+					<label th:for="'brano-' + ${brano.id}" th:text="${brano.nome}">Canzone</label>
+				</div>
+			</div>
+			
+			<span th:if="${brani== null or #lists.isEmpty(brani)}">
+				NON CI SONO BRANI NEL DATABASE!
+			</span>
+		</div>
+
+		<br>
+		<button type="submit">CONCLUDI E INSERISCI ALBUM</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Site - Login</title>
+    <link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <style>
+        .login-container { max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; }
+        .error-message { color: red; margin-bottom: 15px; font-weight: bold; }
+        .success-message { color: green; margin-bottom: 15px; font-weight: bold; }
+        .btn-submit { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
+        .btn-submit:hover { background-color: #0056b3; }
+        .register-link { text-align: center; margin-top: 15px; display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Accedi al Sito</h2>
+        
+        <div th:if="${param.error}" class="error-message">
+            Username o password errati. Riprova.
+        </div>
+
+        <div th:if="${param.logout}" class="success-message">
+            Sei uscito con successo dal tuo account.
+        </div>
+
+        <form th:action="@{/login}" method="POST">
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required="required" autofocus="autofocus" placeholder="Inserisci il tuo username"/>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required="required" placeholder="Inserisci la tua password"/>
+            </div>
+            
+            <button type="submit" class="btn-submit">Accedi</button>
+        </form>
+
+        <a th:href="@{/register}" class="register-link">Non hai un account? Registrati qui</a>
+    </div>
+
+</body>
+</html>

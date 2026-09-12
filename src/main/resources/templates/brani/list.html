@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Artisti</title>
+</head>
+
+<body>
+	<h1> LISTA BRANI: </h1>
+	<h1>Numero brani:</h1>
+	<span th:text="${braniNum}">12</span>
+	<div>
+		<ul>
+			<li th:each="brano: ${brani}">
+				<a th:href="@{'/brani/' + ${brano.id}}" th:text="${brano.nome}">Stan</a>
+			</li>
+		</ul>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Site - Registrazione</title>
+    <link rel="stylesheet" th:href="@{/css/stile.css}" />
+    <style>
+        .register-container { max-width: 450px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; font-family: Arial, sans-serif; }
+        .form-section { margin-bottom: 20px; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
+        .form-section h3 { margin-top: 0; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        .error-message { color: red; font-size: 0.85em; margin-top: 5px; display: block; font-weight: bold; }
+        .btn-submit { background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 1em; }
+        .btn-submit:hover { background-color: #218838; }
+        .login-link { text-align: center; margin-top: 15px; display: block; color: #007bff; text-decoration: none; }
+        .login-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Crea un nuovo Account</h2>
+        
+        <form th:action="@{/register}" method="POST">
+            
+            <div class="form-section">
+                <h3>Dati Personali</h3>
+                
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" th:value="${user?.name}" placeholder="Inserisci il tuo nome"/>
+                    <span class="error-message" th:each="err : ${#fields.errors('user.name')}" th:text="${err}"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="surname">Cognome</label>
+                    <input type="text" id="surname" name="surname" th:value="${user?.surname}" placeholder="Inserisci il tuo cognome"/>
+                    <span class="error-message" th:each="err : ${#fields.errors('user.surname')}" th:text="${err}"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" th:value="${user?.email}" placeholder="Inserisci la tua email"/>
+                    <span class="error-message" th:each="err : ${#fields.errors('user.email')}" th:text="${err}"></span>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Credenziali di Accesso</h3>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" th:value="${credentials?.username}" placeholder="Scegli un username"/>
+                    <span class="error-message" th:each="err : ${#fields.errors('credentials.username')}" th:text="${err}"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" th:value="${credentials?.password}" placeholder="Scegli una password"/>
+                    <span class="error-message" th:each="err : ${#fields.errors('credentials.password')}" th:text="${err}"></span>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-submit">Registrati</button>
+        </form>
+        
+        <a th:href="@{/login}" class="login-link">Hai già un account? Accedi qui</a>
+    </div>
+
+</body>
+</html>
